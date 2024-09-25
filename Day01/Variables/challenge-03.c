@@ -6,6 +6,6 @@ int main() {
    printf("entre la lenge en km:  ");
    scanf("%f",&km);
       yard=km*1093.61;
-   printf("le temperature en kelvin c'est k=%0.2f",yard);
+   printf("la distence en yard c'est k=%0.2f",yard);
     return 0;
 }
