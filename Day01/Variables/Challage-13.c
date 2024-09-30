@@ -9,17 +9,19 @@ void k(int N)
     printf("%d", N % 2);
 }
 
-int main() 
+int main()
 {
     int N;
     printf("entre le nombre N :  ");
     scanf("%d", &N);
     printf("le nombre N en decimale est : ");
-    if(N == 0){
-        printf("0");
-    }else
+    if (N == 0)
     {
-          k(N);
+        printf("0");
+    }
+    else
+    {
+        k(N);
     }
     return 0;
 }
