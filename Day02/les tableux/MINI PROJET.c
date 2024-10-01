@@ -18,7 +18,8 @@ int main() {
         printf("3. Rechercher un livre par auteur\n");
         printf("4. Afficher le nombre total de livres en stock\n");
         printf("5. Supprimer un livre\n");
-        printf("6. Quitter\n");
+        printf("6. pour misajour un livre \n");
+         printf("7. Quitter\n");
         printf("-------------------------------------------------------------------\n");
         printf("Saisissez votre choix: ");
         scanf("%d", &choix);
@@ -62,12 +63,12 @@ int main() {
                 break;
 
             case 3:
-                printf("Entrez le nom de l'auteur: ");
+                printf("Entrez le nom de l'auteur ou le titre de livre: ");
                 scanf("%s", a);
 
                 for (i = 0; i < n; i++) {
-                    if (strcmp(auteur[i], a) == 0) {
-                        printf("Titre: %s, Prix: %.2f DH\n", titre[i], prix[i]);
+                    if ((strcmp(auteur[i], a) == 0)|| (strcmp(titre[i], a) == 0)) {
+                        printf("Titre: %s,auteur %s, Prix: %.2f DH ,Quantitie:%d \n", titre[i],auteur[i], prix[i],quantite[i]);
                     }
                 }
                 break;
@@ -99,15 +100,31 @@ int main() {
                     }
                 }
                 break;
+case 6 :
+ printf("Entrez le nom de l'auteur ou le titre de livre pour misajour: ");
+                scanf("%s", a);
 
-            case 6:
+                for (i = 0; i < n; i++) {
+                     if (n == 0) {
+                    printf("Aucun livre disponible.\n");}
+                    else if ((strcmp(auteur[i], a) == 0)|| (strcmp(titre[i], a) == 0)) {
+                        printf(" nouveaux Prix:   \n");
+                       scanf("%f",&prix[i]);
+                         printf(" Quantitie:%d \n");
+                         scanf("%d",&quantite[i]);
+                printf("le misajeur reussir");
+                }else
+                printf("ce livre n'existe pas ");}
+                 break;
+                     case 7 :
                 printf("Au revoir !\n");
                 break;
 
             default:
                 printf("Choix invalide. Veuillez réessayer.\n");
         }
-    } while (choix != 6);
+    
+    } while (choix != 7);
 
     return 0;
 }
