@@ -3,7 +3,7 @@
 #include <conio.h>
 #include <string.h>
 int choix, nbr = 0;
-typedef struct
+typedef struct 
 {
     char nom[30];
     char prenom[30];
@@ -45,25 +45,28 @@ int main()
             int n;
             printf("================Ajoute un contact===============================\n");
             printf("combien les contact vous ajoutez: \n");
+
             scanf("%d", &n);
-            for (int i = nbr; i < (nbr + n); i++)
+        
+            for (int i = 0; i < n; i++)
             {
                 printf("_____________________________________________________________\n");
                 printf("entre le contact %d \n", i, nbr + 1);
                 printf("_____________________________________________________________\n");
                 printf("entre le nom: \n");
-                scanf("%s", &Co[i].nom);
+                scanf("%s", Co[nbr].nom);
 
                 printf("entre le prenom: \n");
-                scanf("%s", &Co[i].prenom);
+                scanf("%s", Co[nbr].prenom);
 
                 printf("entre le Email: \n");
-                scanf("%s", &Co[i].email);
+                scanf("%s", Co[nbr].email);
 
                 printf("entre le nemero de telephone: \n");
-                scanf("%s", &Co[i].nemuro);
+                scanf("%s", Co[nbr].nemuro);
+                nbr++;
             }
-            nbr = nbr + n;
+            
 }
             break;
 
@@ -97,7 +100,7 @@ int main()
             scanf("%s", &ch);
             for (int i = 0; i < nbr; i++)
             {
-                if ((strcmp(Co[i].nom, ch) == 0) || (strcmp(Co[i].nom, ch) == 0))
+                if ((strcmp(Co[i].nom, ch) == 0) || (strcmp(Co[i].prenom, ch) == 0))
                 {
                     printf("***********************************************************\n");
                     printf("nom:%s \n", Co[i].nom);
@@ -121,7 +124,10 @@ int main()
 
                 printf("==========modifie de contact===============================\n");
                 printf("entre le nom ou le prenom: \n");
-                scanf("%[^\n]s", &ch);
+
+                scanf("%s", &ch);
+
+
                 for (int i = 0; i < nbr; i++)
                 {
                     if (strcasecmp(Co[i].nom, ch) == 0)
@@ -173,7 +179,7 @@ int main()
                 {
                     if (strcasecmp(Co[i].nom, ch) == 0)
                     {
-                        for (int j = i; j < nbr - 1; i++)
+                        for (int j = i; j < nbr ; j++)
                         {
                             strcpy(Co[j + 1].nom, Co[j].nom);
                             strcpy(Co[j + 1].prenom, Co[j].prenom);
@@ -181,6 +187,7 @@ int main()
                             strcpy(Co[j + 1].nemuro, Co[j].nemuro);
                         }
                         nbr--;
+                        printf("le contact est suprime");
                     }
                     else if (strcasecmp(Co[i].prenom, ch) == 0)
                     {
@@ -192,19 +199,20 @@ int main()
                             strcpy(Co[j + 1].nemuro, Co[j].nemuro);
                         }
                         nbr--;
+                         printf("le contact est suprime\n");
                     }else 
-                    printf("le contact n'est exist pas ");
+                    printf("le contact n'est exist pas \n");
                 }
 
                         break;
 
                     case 6:
-                        printf("==========Au rovoir==========================\n");
+                        printf("=============Au rovoir==========================\n");
                         break;
                     default:
                     {
                         printf("entrez le choix valide");
-                    }
+                    }getch();
         }
                         
           }      } while (choix != 6);
