@@ -1,19 +1,18 @@
 #include <stdio.h>
 #include<stdlib.h>
-int a,b,s;
-int somme(int a,int b){
-    int s=a+b;
-    return s;
+int a,b,p;
+int produit(int a,int b){
+    int p=a*b;
+    return p;
 }
 int main(){
-    int resultat;
     printf("entre a:  " );
     scanf("%d",&a );
 
      printf("entre b:  " );
     scanf("%d",&b );
-   resultat=somme(a,b);
-printf("la somme de a+b=%d", resultat);
+  int resultat=produit(a,b);
+printf("le produit de a*b=%d", resultat);
 return 0;
     
 }

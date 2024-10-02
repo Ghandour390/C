@@ -1,19 +1,20 @@
 #include <stdio.h>
 #include<stdlib.h>
-int a,b,s;
-int somme(int a,int b){
-    int s=a+b;
-    return s;
+int a,b,max;
+int maximum(int a,int b){
+    max=a;
+    if(max<b)
+    max=b;
+    return max;
 }
 int main(){
-    int resultat;
     printf("entre a:  " );
     scanf("%d",&a );
 
      printf("entre b:  " );
     scanf("%d",&b );
-   resultat=somme(a,b);
-printf("la somme de a+b=%d", resultat);
+  int resultat=maximum(a,b);
+printf("lE MAX de  de a et b=%d", resultat);
 return 0;
     
 }

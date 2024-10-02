@@ -87,7 +87,7 @@ int main() {
                     casse--;
 
                     if (casse >= 0 && casse < n) {
-                        for (j = casse; j < n - 1; j++) {
+                        for (int j = casse; j < n - 1; j++) {
                             strcpy(titre[j], titre[j + 1]);
                             strcpy(auteur[j], auteur[j + 1]);
                             prix[j] = prix[j + 1];
