@@ -11,7 +11,7 @@ typedef struct
     char nemuro[12];
 } Contact;
 Contact Co[1000];
-int choix, n;
+int choix, n,i;
 int menu()
 {
     printf("=====================================================================\n");
