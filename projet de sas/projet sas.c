@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <conio.h>
 #include <string.h>
+#include <stdbool.h>
+#include<time.h>
 typedef struct
 {
 
@@ -22,33 +24,53 @@ typedef struct
     date date;
     int ID;
 } reservation;
+
 reservation Re[100];
-int choix, nbr = 10, i,c;
+int choix, nbr = 10, i, c;
 char recherche[30];
+
 int menu()
 {
-    printf("=====================================================================\n");
-    printf("1)  | Affiche les reservation \n");
-    printf("----|----------------------------------------------------------------\n");
-    printf("2 ) | Ajoute les reservation \n");
-    printf("----|----------------------------------------------------------------\n");
-    printf("3 ) |recherche par nom ou prenom \n");
-    printf("----|----------------------------------------------------------------\n");
-    printf("4 ) |Modification de reservation \n");
-    printf("----|----------------------------------------------------------------\n");
-    printf("5)  |suprimer le reservattion \n");
-    printf("----|---------------------------------------------------------------\n");
-    printf("6)  |le ordre de reservation \n");
-    printf("----|----------------------------------------------------------------\n");
-    printf("7)  |le statistique de reservation \n");
-    printf("----|----------------------------------------------------------------\n");
-    printf("8)  |fermmez le programme \n");
-    printf("====|=================================================================\n");
-    printf("    |entre le choix:  \n");
-    scanf("%d", &choix);
-    printf("====|=================================================================\n");
+    int choix;
+    bool valid_entrer;
+
+    do
+    {
+        printf("=====================================================================\n");
+        printf("1)  | Affiche les reservation \n");
+        printf("----|----------------------------------------------------------------\n");
+        printf("2 ) | Ajoute les reservation \n");
+        printf("----|----------------------------------------------------------------\n");
+        printf("3 ) | recherche par nom ou prenom \n");
+        printf("----|----------------------------------------------------------------\n");
+        printf("4 ) | Modification de reservation \n");
+        printf("----|----------------------------------------------------------------\n");
+        printf("5)  | suprimer le reservation \n");
+        printf("----|----------------------------------------------------------------\n");
+        printf("6)  | trie de reservation \n");
+        printf("----|----------------------------------------------------------------\n");
+        printf("7)  | statistique de reservation \n");
+        printf("----|----------------------------------------------------------------\n");
+        printf("8)  | ferme le programme \n");
+        printf("====|=================================================================\n");
+        printf("    | Entrez le choix (entre 1 et 8):  \n");
+
+        valid_entrer = (scanf("%d", &choix) == 1);
+
+        while (getchar() != '\n')
+            ;
+
+        if (!valid_entrer || choix < 1 || choix > 8)
+        {
+            printf("Choix invalide. Veuillez entrer un nombre entre 1 et 8.\n");
+        }
+
+        printf("====|=================================================================\n");
+    } while (!valid_entrer);
+
     return choix;
 }
+
 void initial()
 {
     // 10 RESERVATIONS INITIALES
@@ -165,6 +187,7 @@ void initial()
 
 void ajouter()
 {
+    srand(time(0)+clock());
 
     printf("entre la date jj/mm/nn \n");
     printf("====================================\n");
@@ -196,10 +219,12 @@ void ajouter()
     printf("age: \n");
     scanf("%d", &Re[nbr].age);
     printf("====================================\n");
-    Re[nbr].ID++;
-    printf("ID=%d\n", Re[nbr].ID);
+    
+    Re[nbr].ID = rand();
+    printf("ID=%d \n",Re[nbr].ID);
     nbr++;
 }
+
 void afficher()
 {
     if (nbr == 0)
@@ -210,53 +235,99 @@ void afficher()
     {
         for (int i = 0; i < nbr; i++)
         {
-            printf("====================================\n");
-            printf("DATE: %d /%d /%d  \n", Re[i].date.jj, Re[i].date.mm, Re[i].date.nn);
-            printf("====================================\n");
-            printf("entre le nom:%s  \n", Re[i].nom);
-            printf("entre le prenom: %s \n", Re[i].prenom);
-            printf("====================================\n");
-            printf("numero de telephone:%s \n", Re[i].tele);
-            printf("====================================\n");
-            printf("cin:%s \n", Re[i].cin);
-            printf("====================================\n");
-            printf("age:%d \n", Re[i].age);
-            printf("====================================\n");
-            printf("statut:%s \n", Re[i].statut);
-            printf("====================================\n");
+            printf("\n");
+            printf("****************** RENDEZ-VOUS %d ******************\n", i + 1);
+            printf("DATE: %d / %d / %d\n", Re[i].date.jj, Re[i].date.mm, Re[i].date.nn);
+            printf("----------------------------------------------------\n");
+            printf("Nom: %s\n", Re[i].nom);
+            printf("Prenom: %s\n", Re[i].prenom);
+            printf("Telephone: %s\n", Re[i].tele);
+            printf("CIN: %s\n", Re[i].cin);
+            printf("Age: %d\n", Re[i].age);
+            printf("Statut: %s\n", Re[i].statut);
             printf("ID: %d\n", Re[i].ID);
+            printf("*****************************************************\n");
         }
     }
 }
+
 void rechercher()
 {
-    printf("entre le nom ou le prenom ou cin: \n");
-    scanf("%s", &recherche);
-    for (int i = 0; i < nbr; i++)
+    int choix;
+    char recherche[50];
+
+    printf("Voulez-vous rechercher par ID (entrez 1) ou par nom/prenom/CIN (entrez 2)?\n");
+    scanf("%d", &choix);
+
+    if (choix == 1)
     {
-        if (strcmp(Re[i].nom, recherche) == 0 || strcmp(Re[i].prenom, recherche) == 0 || strcmp(Re[i].cin, recherche) == 0)
+
+        int id;
+        printf("Entrez le ID: \n");
+        scanf("%d", &id);
+
+        for (int i = 0; i < nbr; i++)
         {
-            printf("===========il'exste un resirvation=====\n");
-            printf("====================================\n");
-            printf("DATE: %d/%d/%d \n", Re[i].date.jj, Re[i].date.mm, Re[i].date.nn);
-            printf("====================================\n");
-            printf("entre le nom:%s  \n", Re[i].nom);
-            printf("entre le prenom: %s \n", Re[i].prenom);
-            printf("====================================\n");
-            printf("numero de telephone:%s \n", Re[i].tele);
-            printf("====================================\n");
-            printf("cin:%s \n", Re[i].cin);
-            printf("====================================\n");
-            printf("statut:%s \n", Re[i].statut);
-            printf("====================================\n");
-            printf("cin:%d \n", Re[i].age);
-            printf("====================================\n");
-            printf("statut: %d\n", Re[i].ID);
+            if (Re[i].ID == id)
+            {
+                printf("===========Il existe une reservation=====\n");
+                printf("====================================\n");
+                printf("DATE: %d/%d/%d \n", Re[i].date.jj, Re[i].date.mm, Re[i].date.nn);
+                printf("====================================\n");
+                printf("Nom: %s  \n", Re[i].nom);
+                printf("Prénom: %s \n", Re[i].prenom);
+                printf("====================================\n");
+                printf("Numéro de téléphone: %s \n", Re[i].tele);
+                printf("====================================\n");
+                printf("CIN: %s \n", Re[i].cin);
+                printf("====================================\n");
+                printf("Statut: %s \n", Re[i].statut);
+                printf("====================================\n");
+                printf("Âge: %d \n", Re[i].age);
+                printf("====================================\n");
+                printf("ID: %d\n", Re[i].ID);
+                return;
+            }
         }
-        else
-            printf("====== n'exist pas le rendiveux=========\n");
+        printf("Aucune réservation trouvée pour l'ID %d.\n", id);
+    }
+    else if (choix == 2)
+    {
+
+        printf("Entrez le nom, prénom ou CIN: \n");
+        scanf("%s", recherche);
+
+        for (int i = 0; i < nbr; i++)
+        {
+            if (strcmp(Re[i].nom, recherche) == 0 || strcmp(Re[i].prenom, recherche) == 0 || strcmp(Re[i].cin, recherche) == 0)
+            {
+                printf("===========Il existe une réservation=====\n");
+                printf("====================================\n");
+                printf("DATE: %d/%d/%d \n", Re[i].date.jj, Re[i].date.mm, Re[i].date.nn);
+                printf("====================================\n");
+                printf("Nom: %s  \n", Re[i].nom);
+                printf("Prénom: %s \n", Re[i].prenom);
+                printf("====================================\n");
+                printf("Numéro de téléphone: %s \n", Re[i].tele);
+                printf("====================================\n");
+                printf("CIN: %s \n", Re[i].cin);
+                printf("====================================\n");
+                printf("Statut: %s \n", Re[i].statut);
+                printf("====================================\n");
+                printf("Âge: %d \n", Re[i].age);
+                printf("====================================\n");
+                printf("ID: %d\n", Re[i].ID);
+                return;
+            }
+        }
+        printf("Aucune réservation trouvee pour %s.\n", recherche);
+    }
+    else
+    {
+        printf("Choix invalide. Veuillez entrer 1 ou 2.\n");
     }
 }
+
 void modifie()
 {
     for (int i = 0; i < nbr; i++)
@@ -268,19 +339,19 @@ void modifie()
             printf("entre la date jj/mm/nn \n");
             printf("====================================\n");
             printf("jour:  \n");
-            scanf("%d", Re[i].date.jj);
+            scanf("%d", &Re[i].date.jj);
 
             printf("mois:  \n");
-            scanf("%d", Re[i].date.mm);
+            scanf("%d", &Re[i].date.mm);
 
             printf("anne:  \n");
-            scanf("%d", Re[i].date.nn);
+            scanf("%d", &Re[i].date.nn);
             printf("====================================\n");
             printf("entre le nom:  \n");
             scanf("%s", Re[i].nom);
 
             printf("entre le prenom:  \n");
-            scanf("%s", Re[i].nom);
+            scanf("%s", Re[i].prenom);
             printf("====================================\n");
             printf("numero de telephone: \n");
             scanf("%s", Re[i].tele);
@@ -298,20 +369,9 @@ void modifie()
             printf("======n'exist pas le rendiveux=====\n");
     }
 }
-int choix_de_tri(){
-        printf("=====================================================================\n");
-        printf("1)  | tri par nom \n");
-        printf("----|----------------------------------------------------------------\n");
-        printf("2 ) | tri par date \n");
-        printf("----|----------------------------------------------------------------\n");
-        printf("3 ) | tri par statut \n");
-        printf("====|=================================================================\n");
-        printf("    |entre le choix:  \n");
-        scanf("%d", &c);
-        printf("====|=================================================================\n");
-        return c;
-}
+
 void supprimer()
+
 {
     printf("entre le nom ou le prenom ou cin: \n");
 
@@ -326,7 +386,7 @@ void supprimer()
         {
             trouve = 1;
 
-            printf("============elle existe le randiveux==========");
+            printf("============elle est existe le randiveux========== \n");
 
             for (int j = i; j < nbr - 1; j++)
             {
@@ -345,230 +405,227 @@ void supprimer()
     }
 }
 
-void trie()
+void tri_par_nom()
 {
-    
-    do
+    reservation x;
+    for (int i = 0; i < nbr - 1; i++)
     {
-
-        switch (c)
+        for (int j = 0; j < nbr - i - 1; j++)
         {
-            reservation x;
-        case 1:
-            for (int i = 0; i < nbr; i++)
+            if (strcmp(Re[j].nom, Re[j + 1].nom) > 0)
             {
-                for (int j = 0; j < nbr - 1; j++)
-                {
-                    if (strcmp(Re[j].nom, Re[j + 1].nom) > 0)
-                    {
-                        x = Re[j];
-                        Re[j] = Re[j + 1];
-                        Re[j + 1] = x;
-                    }
-                }
-            }
-
-            afficher();
-            break;
-        case 2:
-            Re[i].date.js = 365 * Re[i].date.nn + 30 * Re[i].date.mm + Re[i].date.jj;
-            
-                for (int i = 0; i < nbr; i++)
-                {
-                    for (int j = 0; j < nbr - 1; j++)
-                    {
-                         if (Re[j].date.js > Re[j + 1].date.js)
-                        {
-                            x = Re[j];
-                            Re[j] = Re[j + 1];
-                            Re[j + 1] = x;
-                        }
-                    }
-                }
-            
-            afficher();
-
-            break;
-        case 3:
-        {
-            printf("*********** Affichage des réservations par statut ***********\n");
-
-            printf("Réservations validees:\n");
-            for (int i = 0; i < nbr; i++)
-            {
-                if (strcmp(Re[i].statut, "valide") == 0)
-                {
-                    printf("Nom: %s, Prénom: %s, Statut: %s\n", Re[i].nom, Re[i].prenom, Re[i].statut);
-                }
-            }
-
-            printf("\nreseravation reportees:\n");
-            for (int i = 0; i < nbr; i++)
-            {
-                if (strcmp(Re[i].statut, "reporte") == 0)
-                {
-                    printf("Nom: %s, Prénom: %s, Statut: %s\n", Re[i].nom, Re[i].prenom, Re[i].statut);
-                }
-            }
-
-            printf("\nreservation  annulees:\n");
-            for (int i = 0; i < nbr; i++)
-            {
-                if (strcmp(Re[i].statut, "annule") == 0)
-                {
-                    printf("Nom: %s, Prénom: %s, Statut: %s\n", Re[i].nom, Re[i].prenom, Re[i].statut);
-                }
-            }
-
-            printf("\nreservation annulees:\n");
-            for (int i = 0; i < nbr; i++)
-            {
-                if (strcmp(Re[i].statut, "traite") == 0)
-                {
-                    printf("Nom: %s, Prenom: %s, Statut: %s\n", Re[i].nom, Re[i].prenom, Re[i].statut);
-                }
+                x = Re[j];
+                Re[j] = Re[j + 1];
+                Re[j + 1] = x;
             }
         }
-        break;
-        default:
-            printf("=====entre la valour entre 1 et 3======== \n");
-            getch();
-        }
-    } while (c != 4);
-
-    
+    }
+    printf("=== Tri par nom effectué ===\n");
+    afficher();
 }
 
-void statistique()
+void tri_par_date()
 {
-    int moyenne, i;
-    int totalage = 0;
-    for (int i = 0; i < nbr; i++)
+    reservation x;
+    for (int i = 0; i < nbr - 1; i++)
     {
-        totalage = totalage + Re[i].age;
-    }
-    moyenne = totalage / nbr;
-    printf("======= la moyenne de l'age=%d========== \n", moyenne);
-    for (int i = 0; i < nbr; i++)
-    {
-        if (Re[i].age <= 18)
+        for (int j = 0; j < nbr - i - 1; j++)
         {
-            printf("==========================================\n");
-            printf("DATE: %d/%d/%d \n", Re[i].date.jj, Re[i].date.mm, Re[i].date.nn);
-            printf("====================================\n");
-            printf("entre le nom:%s  \n", Re[i].nom);
-            printf("entre le prenom: %s \n", Re[i].prenom);
-            printf("====================================\n");
-            printf("numero de telephone:%s \n", Re[i].tele);
-            printf("====================================\n");
-            printf("cin:%s \n", Re[i].cin);
-            printf("====================================\n");
-            printf("cin:%s \n", Re[i].cin);
-            printf("====================================\n");
-            printf("statut:%s \n", Re[i].statut);
-            printf("====================================\n");
-            printf("ID: %d\n", Re[i].ID);
+
+            long int js1 = Re[j].date.nn * 365 + Re[j].date.mm * 30 + Re[j].date.jj;
+            long int js2 = Re[j + 1].date.nn * 365 + Re[j + 1].date.mm * 30 + Re[j + 1].date.jj;
+
+            if (js1 > js2)
+            {
+                x = Re[j];
+                Re[j] = Re[j + 1];
+                Re[j + 1] = x;
+            }
+        }
+    }
+    printf("=== Tri par date effectué ===\n");
+    afficher();
+}
+
+void tri_par_statut()
+{
+    reservation x;
+    for (int i = 0; i < nbr - 1; i++)
+    {
+        for (int j = 0; j < nbr - i - 1; j++)
+        {
+
+            if (strcmp(Re[j].statut, Re[j + 1].statut) > 0)
+            {
+                x = Re[j];
+                Re[j] = Re[j + 1];
+                Re[j + 1] = x;
+            }
+        }
+    }
+    printf("=== Tri par statut effectué ===\n");
+    afficher();
+}
+
+void trie()
+{
+    int choix = choix_de_tri();
+
+    switch (choix)
+    {
+    case 1 :
+        tri_par_nom();
+        break;
+    case 2 :
+        tri_par_date();
+        break;
+    case 3:
+        tri_par_statut();
+        break;
+    default:
+        printf("Choix invalide. Veuillez entrer une valeur entre 1 et 3.\n");
+    }
+}
+
+int choix_de_tri()
+{
+    int choix;
+    printf("=====================================================================\n");
+    printf("1)  | Tri par nom \n");
+    printf("----|----------------------------------------------------------------\n");
+    printf("2)  | Tri par date \n");
+    printf("----|----------------------------------------------------------------\n");
+    printf("3)  | Tri par statut \n");
+    printf("====|=================================================================\n");
+    printf("Entrez votre choix (1, 2 ou 3): \n");
+    scanf("%d", &choix);
+    return choix;
+}
+
+void moyenne_age()
+{
+    if (nbr == 0)
+    {
+        printf("Aucune reservation disponible pour calculer la moyenne d'age.\n");
+        return;
+    }
+
+    int total_age = 0;
+    for (int i = 0; i < nbr; i++)
+    {
+        total_age = total_age+Re[i].age;
+    }
+    int moyenne = total_age / nbr;
+    printf("La moyenne d'age est: %d ans\n", moyenne);
+}
+
+void tatistique_par_statut(){
+    int cont1=0,cont2=0,cont3=0,cont4;
+for(int i=0;i<nbr;i++){
+    if(strcmp(Re[i].statut,"validie")==0){
+        cont1++;}
+        else if(strcmp(Re[i].statut,"annule")==0){
+            cont2++;}
+        else if(strcmp(Re[i].statut,"rapotie")==0){
+            cont3++;}
+        else
+            cont4++;}
+        printf("le nombre de statut validie est :%d \n",cont1);
+
+         printf("le nombre de statut annule est :%d \n",cont2);
+        printf("le nombre de statut raportie est :%d \n",cont3);
+         printf("le nombre de statut traite est :%d \n",cont4);
+
+}
+
+void statistique_de_age()
+{
+    int cont1 = 0, cont2 = 0, cont3 = 0;
+
+    for (int i = 0; i < nbr; i++)
+    {
+        if (Re[i].age >= 0 && Re[i].age <= 18)
+        {
+            cont1++;
         }
         else if (Re[i].age >= 19 && Re[i].age <= 35)
         {
-            printf("====================================\n");
-            printf("DATE: %d/%d/%d \n", Re[i].date.jj, Re[i].date.mm, Re[i].date.nn);
-            printf("====================================\n");
-            printf("entre le nom:%s  \n", Re[i].nom);
-            printf("entre le prenom: %s \n", Re[i].prenom);
-            printf("====================================\n");
-            printf("numero de telephone:%s \n", Re[i].tele);
-            printf("====================================\n");
-            printf("cin:%s \n", Re[i].cin);
-            printf("====================================\n");
-            printf("cin:%d \n", Re[i].age);
-            printf("====================================\n");
-            printf("statut:%s \n", Re[i].statut);
-            printf("====================================\n");
-            printf("ID: %d\n", Re[i].ID);
+            cont2++;
+        }
+        else if (Re[i].age >= 36)
+        {
+            cont3++;
+        }
+    }
+
+    printf("Nombre de patients par tranche d'age:\n");
+    printf("0-18 ans: %d\n", cont1);
+    printf("19-35 ans: %d\n", cont2);
+    printf("36 ans et plus: %d\n", cont3);
+}
+
+void trie_par_status(){
+    int valide = 0, non_valide = 0;
+    for (int i = 0; i < nbr; i++)
+    {
+        if (strcmp(Re[i].statut, "valide") == 0)
+        {
+            valide++;
         }
         else
         {
-            printf("====================================\n");
-            printf("DATE: %d/%d/%d \n", Re[i].date.jj, Re[i].date.mm, Re[i].date.nn);
-            printf("====================================\n");
-            printf("entre le nom:%s  \n", Re[i].nom);
-            printf("entre le prenom: %s \n", Re[i].prenom);
-            printf("====================================\n");
-            printf("numero de telephone:%s \n", Re[i].tele);
-            printf("====================================\n");
-            printf("cin:%s \n", Re[i].cin);
-            printf("====================================\n");
-            printf("cin:%s \n", Re[i].cin);
-            printf("====================================\n");
-            printf("cin:%d \n", Re[i].age);
-            printf("====================================\n");
-            printf("statut:%s \n", Re[i].statut);
-            printf("====================================\n");
-            printf("ID: %d\n", Re[i].ID);
+            non_valide++;
         }
     }
+    printf("Nombre de reservations valides: %d\n", valide);
+    printf("Nombre de reservations non valides: %d\n", non_valide);
+    return 0;
+}
+
+int statistique()
+{
+    statistique_par_status();
+    printf("---------------------------- \n");
+    moyenne_age();
+    printf("---------------------------- \n");
+    statistique_de_age();
 }
 
 int main()
 {
     initial();
-    char ch[30];
-    do
+    while (1)
     {
         choix = menu();
         switch (choix)
         {
         case 1:
-            printf("***************** Affiche les reservation****************\n");
             afficher();
-            getch();
             break;
         case 2:
-            printf("****************Ajoute les reservation******************\n");
             ajouter();
-            getch();
             break;
         case 3:
-            printf("*******************recherche par nom ou prenom***********\n");
             rechercher();
-            getch();
             break;
         case 4:
-            printf("****************Modifie de reservation********************\n");
             modifie();
-            getch();
             break;
         case 5:
-            printf("***************suprimer************************\n");
-            trie();
-            getch();
+            supprimer();
             break;
         case 6:
-            printf("***************ordre de reservation************************\n");
-            c=choix_de_tri();
             trie();
-            getch();
             break;
-
         case 7:
-            printf("*************le statistique de reservation****************\n");
             statistique();
-            getch();
             break;
         case 8:
-            printf("*************fermmez le programme***********************\n");
-            system("pause");
+            exit(0);
             break;
-
         default:
-            printf("********entrez le choix valide!!!***********************\n");
-            getch();
-            break;
+            printf("Choix invalide.\n");
         }
-    } while (choix != 7);
-    {
-        getch();
     }
     return 0;
 }

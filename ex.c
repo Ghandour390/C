@@ -377,7 +377,7 @@ void trie()
                 {
                     for (int j = 0; j < nbr - 1; j++)
                     {
-                         if (Re[j].date.js > Re[j + 1].date.js)
+                        
                         {
                             x = Re[j];
                             Re[j] = Re[j + 1];
